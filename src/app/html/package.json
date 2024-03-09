@@ -1,0 +1,12 @@
+{
+  "name": "binance-ai",
+  "version": "0.1.0",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.3",
+    "socket.io": "^4.7.4"
+  }
+}
