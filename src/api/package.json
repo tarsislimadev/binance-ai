@@ -1,7 +1,11 @@
 {
   "name": "binance-ai",
   "version": "0.1.0",
+  "scripts": {
+    "start": "node index.js"
+  },
   "dependencies": {
-    "socket.io-client": "^4.7.4"
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5"
   }
 }
