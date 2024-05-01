@@ -1,5 +1,3 @@
-// 
+const { BinanceAPI } = require('./binance.api.js')
 
-const { Klines } = require('./klines.js')
-
-module.exports = { Klines }
+module.exports = { BinanceAPI }

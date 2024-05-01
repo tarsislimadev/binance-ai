@@ -2,16 +2,26 @@ const EventEmitter = require('events')
 
 const ee = new EventEmitter()
 
-const { Klines } = require('./classes')
+const { BinanceAPI } = require('./classes')
 
-ee.on('run', (symbol = 'BNBBRL', limit = 60) => fetch(config.url.klines(symbol, '1s', limit)).then(res => res.json())
-  .then((json) => Array.from(json).map(([Kline_Open_Time, Open_Price, High_Price, Low_Price, Close_Price, Volume, Kline_Close_Time, Quote, Trades, Taker_Buy_Base, Taker_Buy_Quote]) => ({ Kline_Open_Time: +Kline_Open_Time, Open_Price: +Open_Price, High_Price: +High_Price, Low_Price: +Low_Price, Close_Price: +Close_Price, Volume: +Volume, Kline_Close_Time: +Kline_Close_Time, Quote: +Quote, Trades: +Trades, Taker_Buy_Base: +Taker_Buy_Base, Taker_Buy_Quote: +Taker_Buy_Quote, })))
-  .then((klines) => new Klines(klines))
-  .then((klines) => console.log('klines', klines.getDiff()))
-)
+let running = []
 
-ee.on('start', (...data) => console.log('start', ...data))
+const actions = []
+
+let binance = new BinanceAPI('BNBBRL', '1s')
+
+binance.on('updated', (...data) => console.log('updated', ...data))
+
+ee.on('run', () => binance.update())
+
+ee.on('start', (...data) => running.push(setInterval(() => ee.emit('run', ...data), 1000)))
+
+ee.on('stop', (id = running.pop()) => clearInterval(id))
 
 ee.on('exit', () => process.exit(0))
 
-process.stdin.on('data', (data) => ee.emit(...data.toString().split(/\s+/ig)))
+ee.on('running', () => console.log(...running))
+
+ee.on('config', (symbol, interval = '1s', limit = 1000) => binance = new BinanceAPI(symbol, interval, limit))
+
+process.stdin.on('data', (data) => ee.emit(...data.toString().split(/\s+/ig).filter((p) => p)))
