@@ -1,32 +1,10 @@
 const config = require('./config.js')
 
+const { Klines } = require('./classes')
+
 let running = false
 
 const fixDecimal = (num = 0) => +num.toString().replace(/(.)99999.+/, (_, n) => n + 1).replace(/000000.+/, 0)
-
-class Klines {
-  klines = []
-
-  constructor(klines = []) {
-    this.klines = klines
-  }
-
-  calcDiff() {
-    this.klines = Array.from(this.klines).map((kline, ix) => ({ ...kline, Diff: fixDecimal(ix === 0 ? 0 : kline.Close_Price - res[ix - 1].Close_Price) }))
-  }
-
-  getDiff() {
-    const { klines } = this
-
-    return Array.from(klines)
-      .map((kline, ix) => ({ ...kline, Diff: fixDecimal(ix === 0 ? 0 : kline.Close_Price - klines[ix - 1].Close_Price) }))
-      .map(({ Diff }) => Diff)
-  }
-
-  toString() {
-    return JSON.stringify(this.klines, null, 4)
-  }
-}
 
 const run = (symbol = 'BNBBRL', limit = 60) =>
   fetch(config.url.klines(symbol, '1s', limit)).then(res => res.json())
