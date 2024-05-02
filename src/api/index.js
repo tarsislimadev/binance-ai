@@ -12,7 +12,7 @@ let binance = new BinanceAPI('BNBBRL', '1s')
 
 binance.on('updated', (...data) => console.log('updated', ...data))
 
-ee.on('run', () => binance.update())
+ee.on('run', (...data) => binance.update(...data))
 
 ee.on('start', (...data) => running.push(setInterval(() => ee.emit('run', ...data), 1000)))
 
@@ -23,5 +23,11 @@ ee.on('exit', () => process.exit(0))
 ee.on('running', () => console.log(...running))
 
 ee.on('config', (symbol, interval = '1s', limit = 1000) => binance = new BinanceAPI(symbol, interval, limit))
+
+ee.on('buy', (...data) => binance.buy(...data))
+
+ee.on('sell', (...data) => binance.sell(...data))
+
+ee.on('api', (...data) => binance.api(...data).then((json) => console.log(json)).catch((err) => console.error(err)))
 
 process.stdin.on('data', (data) => ee.emit(...data.toString().split(/\s+/ig).filter((p) => p)))
