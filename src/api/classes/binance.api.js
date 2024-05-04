@@ -25,12 +25,16 @@ class BinanceAPI extends EventEmitter {
     return fetch(url, { method, headers, body }).then((res) => res.json())
   }
 
-  update(symbol = this.state.symbol, interval = this.state.interval, limit = this.state.limit) {
+  getKlines(symbol = this.state.symbol, interval = this.state.interval, limit = this.state.limit) {
     this.api('GET', '/klines', { query: { symbol, interval, limit } })
       .then((json) => Array.from(json).map(([Kline_Open_Time, Open_Price, High_Price, Low_Price, Close_Price, Volume, Kline_Close_Time, Quote, Trades, Taker_Buy_Base, Taker_Buy_Quote]) => ({ Kline_Open_Time: +Kline_Open_Time, Open_Price: +Open_Price, High_Price: +High_Price, Low_Price: +Low_Price, Close_Price: +Close_Price, Volume: +Volume, Kline_Close_Time: +Kline_Close_Time, Quote: +Quote, Trades: +Trades, Taker_Buy_Base: +Taker_Buy_Base, Taker_Buy_Quote: +Taker_Buy_Quote, })))
       .then((klines) => Array.from(klines).map((kline, ix) => ({ ...kline, Diff: fixDecimal(ix === 0 ? 0 : kline.Close_Price - klines[ix - 1].Close_Price) })))
       .then((klines) => this.state.diff = Array.from(klines).map(({ Diff }) => Diff))
-      .then(() => this.emit('updated', this.state.diff))
+      .then(() => this.update())
+  }
+
+  update() {
+    this.emit('updated', this.state.diff)
   }
 
   getUrlSearchByParams(params = {}) {

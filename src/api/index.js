@@ -12,9 +12,9 @@ let binance = new BinanceAPI('BNBBRL', '1s')
 
 binance.on('updated', (...data) => console.log('updated', ...data))
 
-ee.on('run', (...data) => binance.update(...data))
+ee.on('klines', (...data) => binance.getKlines(...data))
 
-ee.on('start', (...data) => running.push(setInterval(() => ee.emit('run', ...data), 1000)))
+ee.on('start', (...data) => running.push(setInterval(() => ee.emit('klines', ...data), 1000)))
 
 ee.on('stop', (id = running.pop()) => clearInterval(id))
 
