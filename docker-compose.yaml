@@ -2,18 +2,10 @@ version: '3'
 
 services:
 
-  app:
-    tty: true
-    build: './src/app'
-    volumes:
-      - './src/app/html:/usr/share/nginx/html'
-    ports:
-      - '8080:80'
-
   api:
-    tty: true
     build: './src/api'
     volumes:
       - './src/api:/app'
+      - './data:/data'
     ports:
       - '8000:80'
