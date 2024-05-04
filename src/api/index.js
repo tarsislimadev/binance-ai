@@ -1,20 +1,32 @@
 const EventEmitter = require('events')
 
-const ee = new EventEmitter()
-
 const { BinanceAPI } = require('./classes')
+
+const { Database } = require('@brtmvdl/database')
+
+const db = new Database({ type: 'fs', config: '/data' })
+
+db.addListener('writeMany', (...data) => console.log('writeMany', ...data))
 
 let running = []
 
-const actions = []
+let binance = new BinanceAPI('BNBBRL', '1s', 100)
 
-let binance = new BinanceAPI('BNBBRL', '1s')
+// binance.on()
 
 binance.on('updated', (...data) => console.log('updated', ...data))
 
-ee.on('klines', (...data) => binance.getKlines(...data))
+binance.on('orderTest', (data) => {
+  db.in('orderTest').new().writeMany(data)
+  //
+  console.log('orderTest', data)
+})
 
-ee.on('start', (...data) => running.push(setInterval(() => ee.emit('klines', ...data), 1000)))
+const ee = new EventEmitter()
+
+ee.on('run', (...data) => binance.getKlines(...data))
+
+ee.on('start', (...data) => running.push(setInterval(() => ee.emit('run', ...data), 1000)))
 
 ee.on('stop', (id = running.pop()) => clearInterval(id))
 
