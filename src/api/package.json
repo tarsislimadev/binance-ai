@@ -3,5 +3,8 @@
   "version": "0.1.0",
   "scripts": {
     "start": "node ./index.js"
+  },
+  "dependencies": {
+    "@brtmvdl/database": "^1.0.5"
   }
 }
