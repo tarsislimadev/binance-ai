@@ -19,7 +19,7 @@ jobs:
       run: docker-compose run cli dart --version
 
     - name: compile executable file
-      run: docker-compose run cli dart compile exe ./bin/binance.dart --target-os=linux
+      run: docker-compose run cli dart compile exe ./bin/binance.dart
 
     - name: create release
       run: gh release create v$( date +%Y%m%d%H%M ) ./src/cli/bin/binance.exe
