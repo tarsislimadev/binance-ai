@@ -15,11 +15,11 @@ jobs:
     - name: install dart
       run: curl -sSL "https://raw.githubusercontent.com/tarsislimadev/debian/refs/heads/main/src/install/dart.sh" | bash
     
-    - name: dart version
-      run: dart --version
-
     - name: compile executable file
-      run: dart compile exe ./src/cli/bin/binance.dart
+      run: |
+          dart pub add http
+          dart pub get
+          dart compile exe ./src/cli/bin/binance.dart
 
     - name: create release
       run: gh release create v$( date +%Y%m%d%H%M ) ./src/cli/bin/binance.exe
