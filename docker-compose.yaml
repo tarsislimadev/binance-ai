@@ -1,7 +1,4 @@
-version: '3'
-
 services:
-
   api:
     build: './src/api'
     volumes:
@@ -9,3 +6,8 @@ services:
       - './data:/data'
     ports:
       - '8000:80'
+
+  cli:
+    build: './src/cli'
+    volumes:
+      - './src/cli:/app'
