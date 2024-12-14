@@ -1,5 +1,11 @@
-import 'package:binance/binance.dart' as binance;
+import 'package:http/http.dart' as http;
 
-void main(List<String> arguments) {
-  print('Hello world: ${binance.calculate()}!');
+void main() async {
+  var symbol = 'BTCBRL';
+  var interval = '1m';
+  var url = Uri.https('api4.binance.com', '/api/v3/klines', {'symbol': symbol, 'interval': interval});
+  
+  var response = await http.get(url);
+  var jsonResponse = response.body;
+  print('JSON response: $jsonResponse.');
 }
