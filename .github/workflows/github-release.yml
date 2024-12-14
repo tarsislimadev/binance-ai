@@ -16,7 +16,7 @@ jobs:
       run: sudo apt -y update && sudo apt -y install docker-compose
     
     - name: dart version
-      run: docker-compose run app dart --version
+      run: docker-compose run cli dart --version
 
     - name: compile executable file
       run: docker-compose run cli dart compile exe ./bin/binance.dart --target-os=linux
