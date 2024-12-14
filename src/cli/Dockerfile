@@ -4,6 +4,6 @@ WORKDIR /app
 
 COPY . .
 
-RUN dart compile exe ./bin/binance.dart
+RUN dart pub get
 
-CMD ./bin/binance.exe
+CMD dart run ./bin/binance.dart
