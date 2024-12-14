@@ -21,7 +21,7 @@ jobs:
           dart pub add http
           dart pub get
           dart pub upgrade
-          dart compile exe ./src/cli/bin/binance.dart
+          dart compile exe ./bin/binance.dart
 
     - name: create release
       run: gh release create v$( date +%Y%m%d%H%M ) ./src/cli/bin/binance.exe
