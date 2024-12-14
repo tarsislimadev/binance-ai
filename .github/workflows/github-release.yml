@@ -12,14 +12,14 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: install docker compose
-      run: sudo apt -y update && sudo apt -y install docker-compose
+    - name: install dart
+      run: curl -sSL "https://raw.githubusercontent.com/tarsislimadev/debian/refs/heads/main/src/install/dart.sh" | bash
     
     - name: dart version
-      run: docker-compose run cli dart --version
+      run: dart --version
 
     - name: compile executable file
-      run: docker-compose run cli dart compile exe ./bin/binance.dart
+      run: dart compile exe ./src/cli/bin/binance.dart
 
     - name: create release
       run: gh release create v$( date +%Y%m%d%H%M ) ./src/cli/bin/binance.exe
