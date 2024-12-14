@@ -8,6 +8,14 @@ To buy/sell coins in Binance
 
 [Donate](https://link.mercadopago.com.br/brtmvdl) - [Telegram](https://t.me/+KRmg5MlqgMk0MTg5) - [Discord](https://discord.gg/auCmnvV2)
 
+## download and run
+
+```sh
+sudo curl -sSL "https://github.com/tarsislimadev/binance-ai/releases/download/v202412141927/binance.exe" --output /usr/bin/binance
+
+sudo chmod 777 /usr/bin/binance
+```
+
 ## license
 
 [MIT](./LICENSE)
