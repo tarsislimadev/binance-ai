@@ -1,0 +1,27 @@
+name: GitHub release
+
+on:
+  push:
+    branches:
+      - 'main'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: install docker compose
+      run: sudo apt -y update && sudo apt -y install docker-compose
+    
+    - name: dart version
+      run: docker-compose run app dart --version
+
+    - name: compile executable file
+      run: docker-compose run cli dart compile exe ./bin/binance.dart --target-os=linux
+
+    - name: create release
+      run: gh release create v$( date +%Y%m%d%H%M ) ./src/cli/bin/binance.exe
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
