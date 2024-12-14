@@ -14,6 +14,8 @@ To buy/sell coins in Binance
 sudo curl -sSL "https://github.com/tarsislimadev/binance-ai/releases/download/v202412141927/binance.exe" --output /usr/bin/binance
 
 sudo chmod 777 /usr/bin/binance
+
+binance --version
 ```
 
 ## license
