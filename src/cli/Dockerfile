@@ -4,6 +4,8 @@ WORKDIR /app
 
 COPY . .
 
+RUN dart pub add http
+
 RUN dart pub get
 
 RUN dart pub upgrade
