@@ -17,8 +17,10 @@ jobs:
     
     - name: compile executable file
       run: |
+          cd ./src/cli/
           dart pub add http
           dart pub get
+          dart pub upgrade
           dart compile exe ./src/cli/bin/binance.dart
 
     - name: create release
