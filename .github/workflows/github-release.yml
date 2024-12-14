@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    
+
     - name: install dart
       run: curl -sSL "https://raw.githubusercontent.com/tarsislimadev/debian/refs/heads/main/src/install/dart.sh" | bash
-    
+
     - name: compile executable file
       run: |
           cd ./src/cli/
@@ -24,6 +24,6 @@ jobs:
           dart compile exe ./bin/binance.dart
 
     - name: create release
-      run: gh release create v$( date +%Y%m%d%H%M ) ./src/cli/bin/binance.exe
+      run: gh release create v$( date +%Y%m%d%H%M ) /home/runner/work/binance-ai/binance-ai/src/cli/bin/binance.exe
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
